@@ -1,0 +1,14 @@
+[package]
+name = "ipod_tone_player_gui"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+egui = "0.25.0"
+eframe = "0.25.0"
+
+# File picker dialog
+egui_file = "0.14.0"
