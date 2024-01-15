@@ -8,3 +8,4 @@ edition = "2021"
 
 [dependencies]
 
+ipod_tone_player_utils = { path = "../common" }

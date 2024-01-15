@@ -1,4 +1,7 @@
 [workspace]
 members = ["crates/*"]
 
-workspace.resolver = "2"
+# https://forum.dfinity.org/t/rust-crate-warning-about-workspace-resolver-what-is-it-how-to-fix-it/23883
+resolver = "2"
+
+[workspace.dependencies]

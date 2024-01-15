@@ -1,6 +1,8 @@
-use rodio::Source;
+
 
 pub mod sound_helpers {
+
+    use rodio::Source;
 
     pub struct SoundTone {
         pub frequency_hz: u32,
@@ -67,11 +69,15 @@ pub mod sound_helpers {
             let sound_duration_ms: std::time::Duration =
                 std::time::Duration::from_millis(tone.duration_ms as u64);
 
-            let source = rodio::source::SineWave::new(tone.frequency_hz as f32)
-                .take_duration(sound_duration_ms)
-                .amplify(1.0);
+            let sound_frequency_tone = rodio::source::SineWave::new(tone.frequency_hz as f32);
 
-            stream_handle.play_raw(source.convert_samples()).unwrap();
+            let sound_source = sound_frequency_tone.take_duration(sound_duration_ms).amplify(1.00);
+
+            // let source = rodio::source::SineWave::new(tone.frequency_hz as f32)
+            //     .take_duration(sound_duration_ms)
+            //     .amplify(1.0);
+
+            stream_handle.play_raw(sound_source.convert_samples()).unwrap();
             std::thread::sleep(sound_duration_ms);
         }
     }

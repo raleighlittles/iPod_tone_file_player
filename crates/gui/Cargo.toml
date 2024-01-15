@@ -7,8 +7,14 @@ edition = "2021"
 
 [dependencies]
 
+ipod_tone_player_utils = { path = "../common" }
+
+# GUI
 egui = "0.25.0"
 eframe = "0.25.0"
+
+# For image loading
+egui_extras = { version = "0.25.0", features = ["all_loaders"] }
 
 # File picker dialog
 egui_file = "0.14.0"
