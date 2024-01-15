@@ -16,5 +16,7 @@ eframe = "0.25.0"
 # For image loading
 egui_extras = { version = "0.25.0", features = ["all_loaders"] }
 
-# File picker dialog
-egui_file = "0.14.0"
+# Almost used this but it isn't supported on WASM.
+# https://github.com/Barugon/egui_file/issues/33
+# Once WASM support is fixed, add this
+# egui_file = "0.14.0"

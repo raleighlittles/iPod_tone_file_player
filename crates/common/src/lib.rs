@@ -10,7 +10,7 @@ pub mod sound_helpers {
     }
 
     // Writes the given tone file out to a WAV file, and then returns the filesize of the created WAV
-    pub fn write_audio_to_wav(tone_arrangements: Vec<SoundTone>, output_wav_filename: &str) -> u64 {
+    pub fn write_audio_to_wav(tone_arrangements: &Vec<SoundTone>, output_wav_filename: &str) -> u64 {
         // WAV file parameters
         let sample_rate_khz: u32 = 192_000;
 
@@ -58,7 +58,7 @@ pub mod sound_helpers {
         return std::fs::metadata(output_wav_filename).unwrap().len();
     }
 
-    pub fn play_sound_aloud(tone_arrangements: Vec<SoundTone>) {
+    pub fn play_sound_aloud(tone_arrangements: &Vec<SoundTone>) {
         // Get a output stream handle to the default physical sound device
         let (_stream, stream_handle) = rodio::OutputStream::try_default().unwrap();
 
@@ -73,21 +73,26 @@ pub mod sound_helpers {
 
             let sound_source = sound_frequency_tone.take_duration(sound_duration_ms).amplify(1.00);
 
-            // let source = rodio::source::SineWave::new(tone.frequency_hz as f32)
-            //     .take_duration(sound_duration_ms)
-            //     .amplify(1.0);
-
             stream_handle.play_raw(sound_source.convert_samples()).unwrap();
             std::thread::sleep(sound_duration_ms);
         }
     }
 
-    pub fn parse_sounds_from_tone_file(tone_file_contents: String) -> Vec<SoundTone> {
+    pub fn parse_sounds_from_tone_file(tone_file_contents: String) -> (String, Vec<SoundTone>) {
+
         let mut sounds: Vec<SoundTone> = Vec::new();
+        let mut tone_name = String::new();
 
         for text_line in tone_file_contents.lines() {
-            if text_line == "Beep" {
+
+            // The first line of the tone file is the header, ie the name of the tone
+            if !text_line.chars().next().unwrap().is_numeric() {
+
+                println!("Playing tone: '{}'", text_line);
+                tone_name = text_line.to_string();
+
                 continue;
+
             } else {
                 let tone_cmd: Vec<&str> = text_line.split_whitespace().collect();
 
@@ -102,6 +107,6 @@ pub mod sound_helpers {
             }
         }
 
-        return sounds;
+        return (tone_name, sounds);
     }
 }
