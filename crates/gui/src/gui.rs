@@ -7,8 +7,6 @@ use ipod_tone_player_utils::sound_helpers::play_sound_aloud;
 pub struct MyApp {
 
     tone_file_contents : String,
-
-
 }
 
 impl Default for MyApp {
